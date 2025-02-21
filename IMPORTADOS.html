@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMPORTADOS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Barra de navegación -->
+  <nav class="bg-white shadow-lg p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">IMPORTADOS</h1>
+    <ul class="flex space-x-6">
+      <li><a href="#iphones" class="hover:text-blue-500">Iphone</a></li>
+      <li><a href="#accesorios" class="hover:text-blue-500">Accesorios</a></li>
+      <li><a href="#contacto" class="hover:text-blue-500">Contacto</a></li>
+    </ul>
+    <button class="relative" id="cart-button">
+      🛒
+      <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">0</span>
+    </button>
+  </nav>
+
+  <!-- Sección de iPhones -->
+  <section id="iphones" class="p-8">
+    <h2 class="text-xl font-semibold mb-4">Iphones</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+      <!-- Aquí se agregarán los 6 modelos de iPhone -->
+      <div class="bg-white p-4 shadow rounded-lg">
+        <h3 class="font-bold">iPhone 14 Pro</h3>
+        <p>Precio: $1,200</p>
+        <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded add-to-cart">Agregar al carrito</button>
+      </div>
+      <!-- Repetir estructura para otros 5 modelos -->
+    </div>
+  </section>
+
+  <!-- Sección de Accesorios -->
+  <section id="accesorios" class="p-8">
+    <h2 class="text-xl font-semibold mb-4">Accesorios</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <!-- Aquí se agregarán los 46 accesorios -->
+      <div class="bg-white p-4 shadow rounded-lg">
+        <h3 class="font-bold">Cargador Rápido</h3>
+        <p>Precio: $25</p>
+        <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded add-to-cart">Agregar al carrito</button>
+      </div>
+      <!-- Repetir estructura para otros 45 productos -->
+    </div>
+  </section>
+
+  <!-- Sección de Contacto -->
+  <section id="contacto" class="p-8 bg-white shadow-lg rounded-lg m-8">
+    <h2 class="text-xl font-semibold mb-4">Contacto</h2>
+    <p>Email: contacto@importados.com</p>
+    <p>Teléfono: +54 9 11 1234 5678</p>
+    <p>Dirección: Av. Siempre Viva 742, Buenos Aires, Argentina</p>
+  </section>
+
+  <!-- Script de carrito -->
+  <script>
+    let cartCount = 0;
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        cartCount++;
+        document.getElementById('cart-count').innerText = cartCount;
+      });
+    });
+  </script>
+</body>
+</html>
