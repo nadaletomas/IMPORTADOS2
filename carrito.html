@@ -16,14 +16,28 @@
   <!-- Carrito de Compras -->
   <section class="p-8">
     <h2 class="text-xl font-semibold mb-4">Tu Carrito</h2>
-    <div id="cart-items" class="space-y-4">
-      <!-- Los productos agregados se mostrarán aquí -->
-    </div>
+    <div id="cart-items" class="space-y-4"></div>
     <div class="mt-4 text-right">
       <h3 class="text-lg font-bold">Total: $<span id="total-price">0</span></h3>
       <button id="pay-button" class="mt-2 bg-green-500 text-white px-4 py-2 rounded">Pagar</button>
     </div>
   </section>
+
+  <!-- Selección de Método de Pago -->
+  <div id="payment-method" class="hidden p-8 bg-white shadow-lg rounded-lg m-8">
+    <h2 class="text-xl font-bold mb-4">Selecciona un método de pago</h2>
+    <select id="payment-select" class="border p-2 rounded w-full">
+      <option value="">Seleccionar</option>
+      <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+      <option value="PayPal">PayPal</option>
+      <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+    </select>
+    
+    <div id="payment-info" class="mt-4 hidden">
+      <input id="payment-details" type="text" placeholder="Ingresa los datos de pago" class="border p-2 rounded w-full">
+      <button id="confirm-payment" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded w-full">Confirmar Pago</button>
+    </div>
+  </div>
 
   <!-- Confirmación de Pago -->
   <div id="payment-success" class="hidden p-8 bg-white shadow-lg rounded-lg m-8 text-center">
@@ -62,10 +76,43 @@
       location.reload();
     }
 
-    // Proceso de pago simulado
+    // Mostrar opciones de pago al hacer clic en "Pagar"
     document.getElementById('pay-button').addEventListener('click', () => {
-      localStorage.removeItem('cart');
+      if (cart.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+      }
       document.querySelector('section').classList.add('hidden');
+      document.getElementById('payment-method').classList.remove('hidden');
+    });
+
+    // Mostrar campo de información según el método de pago
+    document.getElementById('payment-select').addEventListener('change', (event) => {
+      const selectedPayment = event.target.value;
+      if (selectedPayment) {
+        document.getElementById('payment-info').classList.remove('hidden');
+      } else {
+        document.getElementById('payment-info').classList.add('hidden');
+      }
+    });
+
+    // Confirmar pago
+    document.getElementById('confirm-payment').addEventListener('click', () => {
+      const paymentMethod = document.getElementById('payment-select').value;
+      const paymentDetails = document.getElementById('payment-details').value;
+
+      if (!paymentMethod) {
+        alert("Selecciona un método de pago.");
+        return;
+      }
+      if (!paymentDetails.trim()) {
+        alert("Ingresa la información de pago.");
+        return;
+      }
+
+      // Simulación de pago exitoso
+      localStorage.removeItem('cart');
+      document.getElementById('payment-method').classList.add('hidden');
       document.getElementById('payment-success').classList.remove('hidden');
     });
   </script>
