@@ -29,7 +29,7 @@
   <div id="payment-success" class="hidden p-8 bg-white shadow-lg rounded-lg m-8 text-center">
     <h2 class="text-2xl font-bold text-green-600">¡Pago Exitoso!</h2>
     <p class="mt-4">Gracias por tu compra. Pronto recibirás tu pedido.</p>
-    <a href="IMPORTADOS2.html" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">Volver a la tienda</a>
+    <a href="index.html" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">Volver a la tienda</a>
   </div>
 
   <!-- Script del carrito -->
@@ -67,6 +67,16 @@
       localStorage.removeItem('cart');
       document.querySelector('section').classList.add('hidden');
       document.getElementById('payment-success').classList.remove('hidden');
+    });
+
+    // Redireccionar al carrito desde la página principal
+    document.addEventListener('DOMContentLoaded', () => {
+      const cartButton = document.getElementById('cart-button');
+      if (cartButton) {
+        cartButton.addEventListener('click', () => {
+          window.location.href = 'carrito.html';
+        });
+      }
     });
   </script>
 </body>
