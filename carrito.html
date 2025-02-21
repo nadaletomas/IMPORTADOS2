@@ -10,7 +10,7 @@
   <!-- Barra de navegación -->
   <nav class="bg-white shadow-lg p-4 flex justify-between items-center">
     <h1 class="text-2xl font-bold">IMPORTADOS</h1>
-    <a href="IMPORTADOS3.html" class="hover:text-blue-500">Volver a la tienda</a>
+    <a href="IMPORTADOS4.html" class="hover:text-blue-500">Volver a la tienda</a>
   </nav>
 
   <!-- Carrito de Compras -->
@@ -67,16 +67,6 @@
       localStorage.removeItem('cart');
       document.querySelector('section').classList.add('hidden');
       document.getElementById('payment-success').classList.remove('hidden');
-    });
-
-    // Redireccionar al carrito desde la página principal
-    document.addEventListener('DOMContentLoaded', () => {
-      const cartButton = document.getElementById('cart-button');
-      if (cartButton) {
-        cartButton.addEventListener('click', () => {
-          window.location.href = 'carrito.html';
-        });
-      }
     });
   </script>
 </body>
