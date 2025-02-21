@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IMPORTADOS - Venta de Celulares</title>
+  <title>IMPORTADOS</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
@@ -81,6 +81,11 @@
         cartCount++;
         document.getElementById('cart-count').innerText = cartCount;
       });
+    });
+
+    // Redireccionar al carrito
+    document.getElementById('cart-button').addEventListener('click', () => {
+      window.location.href = 'carrito.html';
     });
   </script>
 </body>
