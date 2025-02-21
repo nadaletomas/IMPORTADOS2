@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras - IMPORTADOS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Barra de navegación -->
+  <nav class="bg-white shadow-lg p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">IMPORTADOS</h1>
+    <a href="index.html" class="hover:text-blue-500">Volver a la tienda</a>
+  </nav>
+
+  <!-- Carrito de Compras -->
+  <section class="p-8">
+    <h2 class="text-xl font-semibold mb-4">Tu Carrito</h2>
+    <div id="cart-items" class="space-y-4">
+      <!-- Los productos agregados se mostrarán aquí -->
+    </div>
+    <div class="mt-4 text-right">
+      <h3 class="text-lg font-bold">Total: $<span id="total-price">0</span></h3>
+      <button id="pay-button" class="mt-2 bg-green-500 text-white px-4 py-2 rounded">Pagar</button>
+    </div>
+  </section>
+
+  <!-- Confirmación de Pago -->
+  <div id="payment-success" class="hidden p-8 bg-white shadow-lg rounded-lg m-8 text-center">
+    <h2 class="text-2xl font-bold text-green-600">¡Pago Exitoso!</h2>
+    <p class="mt-4">Gracias por tu compra. Pronto recibirás tu pedido.</p>
+    <a href="index.html" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">Volver a la tienda</a>
+  </div>
+
+  <!-- Script del carrito -->
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItemsContainer = document.getElementById('cart-items');
+    const totalPriceElement = document.getElementById('total-price');
+    let total = 0;
+
+    // Mostrar productos en el carrito
+    cart.forEach((item, index) => {
+      total += item.price;
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'bg-white p-4 shadow rounded-lg flex justify-between items-center';
+      itemDiv.innerHTML = `
+        <div>
+          <h3 class="font-bold">${item.name}</h3>
+          <p>Precio: $${item.price}</p>
+        </div>
+        <button class="bg-red-500 text-white px-2 py-1 rounded" onclick="removeItem(${index})">Eliminar</button>
+      `;
+      cartItemsContainer.appendChild(itemDiv);
+    });
+    totalPriceElement.innerText = total;
+
+    // Eliminar producto del carrito
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      location.reload();
+    }
+
+    // Proceso de pago simulado
+    document.getElementById('pay-button').addEventListener('click', () => {
+      localStorage.removeItem('cart');
+      document.querySelector('section').classList.add('hidden');
+      document.getElementById('payment-success').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
