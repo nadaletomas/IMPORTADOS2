@@ -7,13 +7,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
-  <!-- Barra de navegación -->
   <nav class="bg-white shadow-lg p-4 flex justify-between items-center">
     <h1 class="text-2xl font-bold">IMPORTADOS</h1>
     <a href="IMPORTADOS9.html" class="hover:text-blue-500">Volver a la tienda</a>
   </nav>
 
-  <!-- Carrito de Compras -->
   <section class="p-8">
     <h2 class="text-xl font-semibold mb-4">Tu Carrito</h2>
     <div id="cart-items" class="space-y-4"></div>
@@ -23,97 +21,54 @@
     </div>
   </section>
 
-  <!-- Selección de Método de Pago -->
   <div id="payment-method" class="hidden p-8 bg-white shadow-lg rounded-lg m-8">
-    <h2 class="text-xl font-bold mb-4">Selecciona un método de pago</h2>
-    <select id="payment-select" class="border p-2 rounded w-full">
-      <option value="">Seleccionar</option>
-      <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
-      <option value="PayPal">PayPal</option>
-      <option value="Transferencia Bancaria">Transferencia Bancaria</option>
-    </select>
+    <h2 class="text-xl font-bold mb-4">Información de Pago</h2>
     
-    <div id="payment-info" class="mt-4 hidden">
-      <input id="payment-details" type="text" placeholder="Ingresa los datos de pago" class="border p-2 rounded w-full">
-      <button id="confirm-payment" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded w-full">Confirmar Pago</button>
-    </div>
-  </div>
-
-  <!-- Confirmación de Pago -->
-  <div id="payment-success" class="hidden p-8 bg-white shadow-lg rounded-lg m-8 text-center">
-    <h2 class="text-2xl font-bold text-green-600">¡Pago Exitoso!</h2>
-    <p class="mt-4">Gracias por tu compra. Pronto recibirás tu pedido.</p>
-    <a href="index.html" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">Volver a la tienda</a>
-  </div>
-
-  <!-- Script del carrito -->
-  <script>
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartItemsContainer = document.getElementById('cart-items');
-    const totalPriceElement = document.getElementById('total-price');
-    let total = 0;
-
-    // Mostrar productos en el carrito
-    cart.forEach((item, index) => {
-      total += item.price;
-      const itemDiv = document.createElement('div');
-      itemDiv.className = 'bg-white p-4 shadow rounded-lg flex justify-between items-center';
-      itemDiv.innerHTML = `
-        <div>
-          <h3 class="font-bold">${item.name}</h3>
-          <p>Precio: $${item.price}</p>
+    <label class="block mb-2 font-semibold">Método de pago</label>
+    <div class="space-y-2">
+      <label class="flex items-center space-x-2">
+        <input type="radio" name="payment" value="credit-card" class="payment-option"> 
+        <span class="font-semibold">Tarjeta de Crédito</span>
+      </label>
+      <div id="credit-card-info" class="hidden space-y-2 p-4 border rounded-lg">
+        <input type="text" placeholder="Número de Tarjeta" class="border p-2 rounded w-full">
+        <input type="text" placeholder="Nombre en la Tarjeta" class="border p-2 rounded w-full">
+        <div class="flex space-x-2">
+          <select class="border p-2 rounded w-full">
+            <option>Mes de Expiración</option>
+          </select>
+          <select class="border p-2 rounded w-full">
+            <option>Año de Expiración</option>
+          </select>
+          <input type="text" placeholder="CVV" class="border p-2 rounded w-full">
         </div>
-        <button class="bg-red-500 text-white px-2 py-1 rounded" onclick="removeItem(${index})">Eliminar</button>
-      `;
-      cartItemsContainer.appendChild(itemDiv);
+      </div>
+      <label class="flex items-center space-x-2">
+        <input type="radio" name="payment" value="paypal" class="payment-option"> 
+        <span class="font-semibold">PayPal</span>
+      </label>
+      <label class="flex items-center space-x-2">
+        <input type="radio" name="payment" value="amazon" class="payment-option"> 
+        <span class="font-semibold">Amazon Payments</span>
+      </label>
+      <label class="flex items-center space-x-2">
+        <input type="radio" name="payment" value="afterpay" class="payment-option"> 
+        <span class="font-semibold">Afterpay</span>
+      </label>
+    </div>
+    
+    <button id="confirm-payment" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded w-full">Confirmar Pago</button>
+  </div>
+
+  <script>
+    document.querySelectorAll('.payment-option').forEach(option => {
+      option.addEventListener('change', function() {
+        document.getElementById('credit-card-info').classList.toggle('hidden', this.value !== 'credit-card');
+      });
     });
-    totalPriceElement.innerText = total;
-
-    // Eliminar producto del carrito
-    function removeItem(index) {
-      cart.splice(index, 1);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      location.reload();
-    }
-
-    // Mostrar opciones de pago al hacer clic en "Pagar"
+    
     document.getElementById('pay-button').addEventListener('click', () => {
-      if (cart.length === 0) {
-        alert("Tu carrito está vacío.");
-        return;
-      }
-      document.querySelector('section').classList.add('hidden');
       document.getElementById('payment-method').classList.remove('hidden');
-    });
-
-    // Mostrar campo de información según el método de pago
-    document.getElementById('payment-select').addEventListener('change', (event) => {
-      const selectedPayment = event.target.value;
-      if (selectedPayment) {
-        document.getElementById('payment-info').classList.remove('hidden');
-      } else {
-        document.getElementById('payment-info').classList.add('hidden');
-      }
-    });
-
-    // Confirmar pago
-    document.getElementById('confirm-payment').addEventListener('click', () => {
-      const paymentMethod = document.getElementById('payment-select').value;
-      const paymentDetails = document.getElementById('payment-details').value;
-
-      if (!paymentMethod) {
-        alert("Selecciona un método de pago.");
-        return;
-      }
-      if (!paymentDetails.trim()) {
-        alert("Ingresa la información de pago.");
-        return;
-      }
-
-      // Simulación de pago exitoso
-      localStorage.removeItem('cart');
-      document.getElementById('payment-method').classList.add('hidden');
-      document.getElementById('payment-success').classList.remove('hidden');
     });
   </script>
 </body>
