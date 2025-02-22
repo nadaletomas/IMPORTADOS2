@@ -61,15 +61,57 @@
   </div>
 
   <script>
+    // Función para cargar el carrito desde localStorage
+    function loadCart() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let cartItemsContainer = document.getElementById('cart-items');
+      let totalPriceElement = document.getElementById('total-price');
+
+      cartItemsContainer.innerHTML = ''; // Limpiar antes de renderizar
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p>Tu carrito está vacío.</p>';
+      } else {
+        cart.forEach((item, index) => {
+          let itemElement = document.createElement('div');
+          itemElement.classList.add('flex', 'justify-between', 'bg-white', 'p-4', 'rounded', 'shadow');
+
+          itemElement.innerHTML = `
+            <span>${item.name} - $${item.price}</span>
+            <button onclick="removeFromCart(${index})" class="text-red-500">Eliminar</button>
+          `;
+
+          cartItemsContainer.appendChild(itemElement);
+          total += item.price;
+        });
+      }
+
+      totalPriceElement.textContent = total.toFixed(2);
+    }
+
+    // Función para eliminar un producto del carrito
+    function removeFromCart(index) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1); // Eliminar producto
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCart(); // Recargar carrito
+    }
+
+    // Mostrar el formulario de pago cuando se haga clic en "Pagar"
+    document.getElementById('pay-button').addEventListener('click', () => {
+      document.getElementById('payment-method').classList.remove('hidden');
+    });
+
+    // Mostrar los campos de tarjeta solo si se selecciona "Tarjeta de Crédito"
     document.querySelectorAll('.payment-option').forEach(option => {
       option.addEventListener('change', function() {
         document.getElementById('credit-card-info').classList.toggle('hidden', this.value !== 'credit-card');
       });
     });
-    
-    document.getElementById('pay-button').addEventListener('click', () => {
-      document.getElementById('payment-method').classList.remove('hidden');
-    });
+
+    // Cargar el carrito cuando la página se abra
+    document.addEventListener('DOMContentLoaded', loadCart);
   </script>
 </body>
 </html>
