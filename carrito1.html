@@ -30,19 +30,6 @@
         <input type="radio" name="payment" value="credit-card" class="payment-option"> 
         <span class="font-semibold">Tarjeta de Crédito</span>
       </label>
-      <div id="credit-card-info" class="hidden space-y-2 p-4 border rounded-lg">
-        <input type="text" placeholder="Número de Tarjeta" class="border p-2 rounded w-full">
-        <input type="text" placeholder="Nombre en la Tarjeta" class="border p-2 rounded w-full">
-        <div class="flex space-x-2">
-          <select class="border p-2 rounded w-full">
-            <option>Mes de Expiración</option>
-          </select>
-          <select class="border p-2 rounded w-full">
-            <option>Año de Expiración</option>
-          </select>
-          <input type="text" placeholder="CVV" class="border p-2 rounded w-full">
-        </div>
-      </div>
       <label class="flex items-center space-x-2">
         <input type="radio" name="payment" value="paypal" class="payment-option"> 
         <span class="font-semibold">PayPal</span>
@@ -55,6 +42,21 @@
         <input type="radio" name="payment" value="afterpay" class="payment-option"> 
         <span class="font-semibold">Afterpay</span>
       </label>
+    </div>
+
+    <!-- Formulario de tarjeta que aparecerá en todos los métodos -->
+    <div id="payment-details" class="space-y-2 p-4 border rounded-lg mt-4">
+      <input type="text" placeholder="Número de Tarjeta" class="border p-2 rounded w-full">
+      <input type="text" placeholder="Nombre en la Tarjeta" class="border p-2 rounded w-full">
+      <div class="flex space-x-2">
+        <select class="border p-2 rounded w-full">
+          <option>Mes de Expiración</option>
+        </select>
+        <select class="border p-2 rounded w-full">
+          <option>Año de Expiración</option>
+        </select>
+        <input type="text" placeholder="CVV" class="border p-2 rounded w-full">
+      </div>
     </div>
     
     <button id="confirm-payment" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded w-full">Confirmar Pago</button>
@@ -103,10 +105,10 @@
       document.getElementById('payment-method').classList.remove('hidden');
     });
 
-    // Mostrar los campos de tarjeta solo si se selecciona "Tarjeta de Crédito"
+    // Hacer que los datos de pago aparezcan en todos los métodos de pago
     document.querySelectorAll('.payment-option').forEach(option => {
       option.addEventListener('change', function() {
-        document.getElementById('credit-card-info').classList.toggle('hidden', this.value !== 'credit-card');
+        document.getElementById('payment-details').classList.remove('hidden');
       });
     });
 
