@@ -44,8 +44,8 @@
       </label>
     </div>
 
-    <!-- Formulario de tarjeta que aparecerá en todos los métodos -->
-    <div id="payment-details" class="space-y-2 p-4 border rounded-lg mt-4">
+    <!-- Formulario de tarjeta (inicialmente oculto) -->
+    <div id="payment-details" class="hidden space-y-2 p-4 border rounded-lg mt-4">
       <input type="text" placeholder="Número de Tarjeta" class="border p-2 rounded w-full">
       <input type="text" placeholder="Nombre en la Tarjeta" class="border p-2 rounded w-full">
       <div class="flex space-x-2">
@@ -105,7 +105,7 @@
       document.getElementById('payment-method').classList.remove('hidden');
     });
 
-    // Hacer que los datos de pago aparezcan en todos los métodos de pago
+    // Mostrar el formulario solo cuando se selecciona un método de pago
     document.querySelectorAll('.payment-option').forEach(option => {
       option.addEventListener('change', function() {
         document.getElementById('payment-details').classList.remove('hidden');
